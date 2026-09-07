@@ -1,21 +1,13 @@
 ---
 import "../styles/global.css";
-
-const Pokemones = [
-	{ name: 'Trecko',type: 'Plant',number: 252, },
-	{ name: 'Torchic',type: 'fire',number: 255, },
-	{ name: 'Mudikip',type: 'water',number: 258, },
-]
-
+import PokemonCard from "../components/PokemonCard.astro";
+const Pokemones = await fetch('https://pokeapi.co/api/v2/pokemon/?limit=135&offset=251');
+const infoPokemon = await Pokemones.json();
 
 ---
 
 <div class="grid grid-cols-3 gap-4">
-	{Pokemones.map((pokemon)=> (
-		<div class="border-2 rounded-md p-6">
-			<h1 class="text-2xl">{pokemon.name}</h1>
-			<p>{pokemon.type}</p>
-			<p>{pokemon.number}</p>
-		</div>
-	))}
+	{infoPokemon.results.map((pokemon) => (
+  <PokemonCard name={pokemon.name} />
+))}
 </div>
