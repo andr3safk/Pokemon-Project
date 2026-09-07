@@ -1,13 +1,19 @@
 ---
 import "../styles/global.css";
 import PokemonCard from "../components/PokemonCard.astro";
+
+interface Pokemon {
+	name: string;
+	url: string;
+}
+
 const Pokemones = await fetch('https://pokeapi.co/api/v2/pokemon/?limit=135&offset=251');
 const infoPokemon = await Pokemones.json();
 
 ---
 
 <div class="grid grid-cols-3 gap-4">
-	{infoPokemon.results.map((pokemon) => (
-  <PokemonCard name={pokemon.name} />
+	{infoPokemon.results.map((pokemon:Pokemon) => (
+  <PokemonCard name={pokemon.name} url={pokemon.url} />
 ))}
 </div>
