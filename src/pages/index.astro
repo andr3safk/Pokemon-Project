@@ -3,17 +3,32 @@ import "../styles/global.css";
 import PokemonCard from "../components/PokemonCard.astro";
 
 interface Pokemon {
-	name: string;
-	url: string;
+    name: string;
+    url: string;
+	id: number;
 }
 
-const Pokemones = await fetch('https://pokeapi.co/api/v2/pokemon/?limit=135&offset=251');
+const Pokemones = await fetch(
+    'https://pokeapi.co/api/v2/pokemon/?limit=135&offset=251'
+);
+
 const infoPokemon = await Pokemones.json();
 
+const pokemones = await Promise.all(
+    infoPokemon.results.map(async (pokemon: Pokemon) => {
+        const respuesta = await fetch(pokemon.url);
+        const datos = await respuesta.json();
+
+        return datos;
+    })
+);
 ---
 
 <div class="grid grid-cols-3 gap-4">
-	{infoPokemon.results.map((pokemon:Pokemon) => (
-  <PokemonCard name={pokemon.name} url={pokemon.url} />
-))}
+    {pokemones.map((pokemon) => (
+        <PokemonCard
+		 name={pokemon.name}
+		 id={pokemon.id}
+		/>
+    ))}
 </div>

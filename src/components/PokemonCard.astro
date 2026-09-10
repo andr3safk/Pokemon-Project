@@ -1,9 +1,8 @@
 ---
-const { name, type, number, url } = Astro.props;
-
+const { name, id } = Astro.props;
 ---
 
 <div class="border-2 rounded-md p-6">
-  <h1 class="text-2xl">{name}</h1>
-  <p>{url}</p>
+    <h1 class="text-2xl">{name}</h1>
+    <p class="text-xl">{id}</p>
 </div>
