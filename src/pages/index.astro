@@ -5,7 +5,6 @@ import PokemonCard from "../components/PokemonCard.astro";
 interface Pokemon {
     name: string;
     url: string;
-	id: number;
 }
 
 const Pokemones = await fetch(
@@ -29,6 +28,7 @@ const pokemones = await Promise.all(
         <PokemonCard
 		 name={pokemon.name}
 		 id={pokemon.id}
+         type={pokemon.types[0].type.name}
 		/>
     ))}
 </div>
