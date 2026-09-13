@@ -29,6 +29,7 @@ const pokemones = await Promise.all(
             name:datos.name,
             id:datos.id,
             tipos:tipos,
+            sprite:datos.sprites.front_default,
         }
         
     })
@@ -42,6 +43,7 @@ const pokemones = await Promise.all(
 		 name={pokemon.name}
 		 id={pokemon.id}
          type={pokemon.tipos}
+         sprite={pokemon.sprite}
 		/>
     ))}
 </div>
