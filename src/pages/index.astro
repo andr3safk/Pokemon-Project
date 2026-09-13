@@ -7,6 +7,12 @@ interface Pokemon {
     url: string;
 }
 
+interface PokemonCardData {
+    name: string;
+    id: number;
+    tipos: string[];
+}
+
 const Pokemones = await fetch(
     'https://pokeapi.co/api/v2/pokemon/?limit=135&offset=251'
 );
@@ -17,10 +23,17 @@ const pokemones = await Promise.all(
     infoPokemon.results.map(async (pokemon: Pokemon) => {
         const respuesta = await fetch(pokemon.url);
         const datos = await respuesta.json();
+         const tipos = datos.types.map((infoTipo: { type: { name: string } }) => infoTipo.type.name);
 
-        return datos;
+        return{
+            name:datos.name,
+            id:datos.id,
+            tipos:tipos,
+        }
+        
     })
 );
+
 ---
 
 <div class="grid grid-cols-3 gap-4">
@@ -28,7 +41,7 @@ const pokemones = await Promise.all(
         <PokemonCard
 		 name={pokemon.name}
 		 id={pokemon.id}
-         type={pokemon.types[0].type.name}
+         type={pokemon.tipos}
 		/>
     ))}
 </div>
