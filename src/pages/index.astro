@@ -24,7 +24,7 @@ const pokemones = await Promise.all(
     infoPokemon.results.map(async (pokemon: Pokemon) => {
         const respuesta = await fetch(pokemon.url);
         const datos = await respuesta.json();
-         const tipos = datos.types.map((infoTipo: { type: { name: string } }) => infoTipo.type.name);
+        const tipos = datos.types.map((infoTipo: { type: { name: string } }) => infoTipo.type.name);
 
         return{
             name:datos.name,
