@@ -1,6 +1,7 @@
 ---
 import type { PokemonCardData } from "../types/pokemon";
 import { colors } from "../constants/pokemonTypes";
+import { capitalize } from "../lib/formatters";
 
 interface Props extends PokemonCardData {}
 
@@ -13,13 +14,13 @@ const { name, id, type, sprite } = Astro.props;
         <img src={sprite} alt={name} class="w-36 h-36 object-contain"/>
     </div>
 
-    <div class="p-1.5 flex flex-col gap-2">
+    <div class="p-2 flex flex-col gap-2">
         <p class="text-xs text-gray-500">{`#${id}`}</p>
-        <h1 class="text-2xl">{name}</h1>
+        <h1 class="text-2xl">{capitalize(name)}</h1>
         <div class="flex gap-2">
             {type.map((t) => (
                 <span class={`text-white text-xs px-2 py-1 rounded-md ${colors[t] ?? "bg-gray-400"}`}>
-                    {t}
+                    {capitalize(t)}
                 </span>
             ))}
         </div>
