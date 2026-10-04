@@ -5,16 +5,19 @@ import { getPokemones } from "../lib/pokemon";
 
 const pokemones = await getPokemones();
 ---
+<main class="bg-gray-300">
 
-<div class="mx-auto max-w-7xl p-4">
-    <div class="grid grid-cols-5 gap-4">
-        {pokemones.map((pokemon) => (
-            <PokemonCard
-                name={pokemon.name}
-                id={pokemon.id}
-                type={pokemon.type}
-                sprite={pokemon.sprite}
-            />
-        ))}
+    <div class="mx-auto max-w-7xl p-4">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+            {pokemones.map((pokemon) => (
+                <PokemonCard
+                    name={pokemon.name}
+                    id={pokemon.id}
+                    type={pokemon.type}
+                    sprite={pokemon.sprite}
+                />
+            ))}
+        </div>
     </div>
-</div>
+
+</main>
