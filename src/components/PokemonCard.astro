@@ -2,16 +2,16 @@
 const { name, id, type, sprite } = Astro.props;
 ---
 
-<div class="border-2 rounded-md p-6 flex flex-col items-center justify-center text-center">
+<div class="border-2 border-slate-100 rounded-md flex flex-col shadow">
     
-    <div class="bg-slate-100">
-        <img src={sprite} alt={name}/>
+    <div class="bg-slate-100 w-full h-46 flex items-center justify-center">
+        <img src={sprite} alt={name} class="w-36 h-36 object-contain"/>
     </div>
 
-    <div>
+    <div class="p-1.5 flex flex-col gap-2">
+        <p class="text-xs text-gray-500">{`#${id}`}</p>
         <h1 class="text-2xl">{name}</h1>
-        <p class="text-xl">{`#${id}`}</p>
-        <p class="text-xl">{type.join(" / ")}</p>
+        <p class="text-sm rounded-md">{type.join(" / ")}</p>
     </div>
     
 </div>
