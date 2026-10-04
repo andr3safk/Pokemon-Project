@@ -1,52 +1,20 @@
 ---
 import "../styles/global.css";
 import PokemonCard from "../components/PokemonCard.astro";
+import { getPokemones } from "../lib/pokemon";
 
-interface Pokemon {
-    name: string;
-    url: string;
-}
-
-interface PokemonCardData {
-    name: string;
-    id: number;
-    tipos: string[];
-    sprite: string | null;
-}
-
-const Pokemones = await fetch(
-    'https://pokeapi.co/api/v2/pokemon/?limit=135&offset=251'
-);
-
-const infoPokemon = await Pokemones.json();
-
-const pokemones = await Promise.all(
-    infoPokemon.results.map(async (pokemon: Pokemon) => {
-        const respuesta = await fetch(pokemon.url);
-        const datos = await respuesta.json();
-        const tipos = datos.types.map((infoTipo: { type: { name: string } }) => infoTipo.type.name);
-
-        return{
-            name:datos.name,
-            id:datos.id,
-            tipos:tipos,
-            sprite:datos.sprites.front_default,
-        }
-        
-    })
-);
-
+const pokemones = await getPokemones();
 ---
+
 <div class="mx-auto max-w-7xl p-4">
     <div class="grid grid-cols-5 gap-4">
         {pokemones.map((pokemon) => (
             <PokemonCard
-		    name={pokemon.name}
-		    id={pokemon.id}
-            type={pokemon.tipos}
-            sprite={pokemon.sprite}
-		/>
-    ))}
+                name={pokemon.name}
+                id={pokemon.id}
+                type={pokemon.type}
+                sprite={pokemon.sprite}
+            />
+        ))}
     </div>
 </div>
-

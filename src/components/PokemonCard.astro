@@ -1,4 +1,9 @@
 ---
+import type { PokemonCardData } from "../types/pokemon";
+import { colors } from "../constants/pokemonTypes";
+
+interface Props extends PokemonCardData {}
+
 const { name, id, type, sprite } = Astro.props;
 ---
 
@@ -11,7 +16,13 @@ const { name, id, type, sprite } = Astro.props;
     <div class="p-1.5 flex flex-col gap-2">
         <p class="text-xs text-gray-500">{`#${id}`}</p>
         <h1 class="text-2xl">{name}</h1>
-        <p class="text-sm rounded-md">{type.join(" / ")}</p>
+        <div class="flex gap-2">
+            {type.map((t) => (
+                <span class={`text-white text-xs px-2 py-1 rounded-md ${colors[t] ?? "bg-gray-400"}`}>
+                    {t}
+                </span>
+            ))}
+        </div>
     </div>
     
 </div>
