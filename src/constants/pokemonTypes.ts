@@ -1,0 +1,20 @@
+export const colors: Record<string, string> = {
+    grass: "bg-green-500",
+    fire: "bg-orange-500",
+    water: "bg-blue-500",
+    poison: "bg-purple-500",
+    electric: "bg-yellow-400",
+    psychic: "bg-pink-500",
+    ice: "bg-cyan-300",
+    bug: "bg-lime-500",
+    normal: "bg-gray-400",
+    fighting: "bg-red-700",
+    ground: "bg-amber-600",
+    flying: "bg-indigo-300",
+    rock: "bg-stone-500",
+    ghost: "bg-violet-800",
+    dragon: "bg-indigo-700",
+    dark: "bg-stone-800",
+    steel: "bg-slate-400",
+    fairy: "bg-pink-300"
+}
