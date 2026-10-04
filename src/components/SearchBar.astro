@@ -1,0 +1,29 @@
+<label for="search" class="sr-only">Buscar Pokémon</label>
+<input
+    id="search"
+    type="search"
+    placeholder="Buscar por nombre, número o tipo"
+    class="w-full p-2 rounded-md mb-4 focus:ring-2"
+/>
+<p id="no-results" class="hidden">No se encontró ningún Pokémon</p>
+<p id="count"></p>
+
+<script>
+    const input = document.querySelector<HTMLInputElement>("#search");
+    const cards = document.querySelectorAll<HTMLElement>("[data-pokemon-card]");
+    const noResults = document.querySelector("#no-results");
+    
+    input?.addEventListener("input", () => {
+        const query = input.value.trim().toLowerCase();
+
+        cards.forEach((card) => {
+        const text = `${card.dataset.name} ${card.dataset.id} ${card.dataset.types}`;
+        card.classList.toggle("hidden", !text.includes(query));
+        });
+
+        const visibles = [...cards].filter((c) => !c.classList.contains("hidden")).length;
+        noResults?.classList.toggle("hidden", visibles > 0);
+        document.querySelector("#count")!.textContent = `Mostrando ${visibles} de ${cards.length}`;
+
+    });
+</script>
