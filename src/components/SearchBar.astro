@@ -6,7 +6,6 @@
     class="bg-white w-full px-4 py-3 shadow rounded-full mb-4 focus:ring-2 focus:outline-none focus:ring-blue-400"
 />
 <p id="no-results" class="hidden">No se encontró ningún Pokémon</p>
-<p id="count"></p>
 
 <script>
     const input = document.querySelector<HTMLInputElement>("#search");
@@ -23,7 +22,6 @@
 
         const visibles = [...cards].filter((c) => !c.classList.contains("hidden")).length;
         noResults?.classList.toggle("hidden", visibles > 0);
-        document.querySelector("#count")!.textContent = `Mostrando ${visibles} de ${cards.length}`;
 
     });
 </script>
