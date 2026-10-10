@@ -1,27 +1,86 @@
+---
+import { pokemonTypes } from "../constants/pokemonTypes";
+import { colors } from "../constants/pokemonTypes";
+---
+
 <label for="search" class="sr-only">Buscar Pokémon</label>
 <input
     id="search"
     type="search"
-    placeholder="Buscar por nombre, número o tipo"
+    placeholder="Search by name, number, or type"
     class="bg-white w-full px-4 py-3 shadow rounded-full mb-4 focus:ring-2 focus:outline-none focus:ring-blue-400"
 />
+
+<p class="mb-3 mt-2 text-2xl text-gray-600 font-bold">Filter by type:</p>
+  
+<div class="grid grid-cols-[repeat(auto-fill,minmax(110px,1fr))] gap-2 mb-6">
+    {pokemonTypes.map((type) => (
+        <button
+            type="button"
+            data-type-filter={type.value}
+            aria-pressed={type.value === ""}
+            class={`text-slate-100 rounded-full py-1.5 text-sm font-medium text-center transition-all duration-150 hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-sky-400 ${colors[type.value] ?? "bg-gray-400"}`}
+        >
+            {type.label}
+        </button>
+    ))}
+</div>
+
 <p id="no-results" class="hidden">No se encontró ningún Pokémon</p>
 
 <script>
     const input = document.querySelector<HTMLInputElement>("#search");
-    const cards = document.querySelectorAll<HTMLElement>("[data-pokemon-card]");
+    const cards = document.querySelectorAll<HTMLElement>(
+        "[data-pokemon-card]"
+    );
     const noResults = document.querySelector("#no-results");
-    
-    input?.addEventListener("input", () => {
-        const query = input.value.trim().toLowerCase();
+    const typeButtons = document.querySelectorAll<HTMLButtonElement>(
+        "[data-type-filter]"
+    );
+
+    let selectedType = "";
+
+    function filterPokemons() {
+        const query = input?.value.trim().toLowerCase() ?? "";
+        let visibleCount = 0;
 
         cards.forEach((card) => {
-        const text = `${card.dataset.name} ${card.dataset.id} ${card.dataset.types}`;
-        card.classList.toggle("hidden", !text.includes(query));
+            const name = card.dataset.name ?? "";
+            const id = card.dataset.id ?? "";
+            const types = (card.dataset.types ?? "").split(" ");
+
+            const matchesQuery =
+                `${name} ${id} ${types.join(" ")}`.includes(query);
+
+            const matchesType =
+                selectedType === "" || types.includes(selectedType);
+
+            const matches = matchesQuery && matchesType;
+
+            card.classList.toggle("hidden", !matches);
+
+            if (matches) {
+                visibleCount++;
+            }
         });
 
-        const visibles = [...cards].filter((c) => !c.classList.contains("hidden")).length;
-        noResults?.classList.toggle("hidden", visibles > 0);
+        noResults?.classList.toggle("hidden", visibleCount > 0);
+    }
 
+    input?.addEventListener("input", filterPokemons);
+
+    typeButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+            selectedType = button.dataset.typeFilter ?? "";
+
+            typeButtons.forEach((item) => {
+                const active = item === button;
+                item.setAttribute("aria-pressed", String(active));
+                item.classList.toggle("bg-blue-600", active);
+                item.classList.toggle("text-white", active);
+            });
+
+            filterPokemons();
+        });
     });
 </script>
