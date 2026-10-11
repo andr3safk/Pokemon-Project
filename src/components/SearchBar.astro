@@ -76,8 +76,6 @@ import { colors } from "../constants/pokemonTypes";
             typeButtons.forEach((item) => {
                 const active = item === button;
                 item.setAttribute("aria-pressed", String(active));
-                item.classList.toggle("bg-blue-600", active);
-                item.classList.toggle("text-white", active);
             });
 
             filterPokemons();
